@@ -39,4 +39,4 @@ getfenv().settings = {
     }
 }
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Yoogp/whitelist/refs/heads/main/Protected_3917332019369376.lua.txt"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Yoogp/whitelist/refs/heads/main/mainsource.txt"))()
