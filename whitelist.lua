@@ -27,48 +27,29 @@ end
 
 local function detectTampering()
     local startTime = tick()
-    while true do
-        if tick() - startTime > 2 then
-            local message = "🚨 CRACK ATTEMPT DETECTED! 🚨\n👤 Username: " .. playerName .. "\n🆔 UserID: " .. playerId
-            warn(message)
+    task.spawn(function()
+        while true do
+            -- Detect if someone is modifying the script
+            if tick() - startTime > 2 and not game:IsLoaded() then
+                local message = "🚨 CRACK ATTEMPT DETECTED! 🚨\n👤 Username: " .. playerName .. "\n🆔 UserID: " .. playerId
+                warn(message)
 
-            -- 🚨 1. Send Webhook Alert
-            local data = httpService:JSONEncode({ content = message })
-            httpService:PostAsync(webhookUrl, data, Enum.HttpContentType.ApplicationJson)
+                -- 🚨 Send Webhook Alert
+                local success, response = pcall(function()
+                    return httpService:PostAsync(webhookUrl, httpService:JSONEncode({ content = message }), Enum.HttpContentType.ApplicationJson)
+                end)
 
-            -- 🚨 2. Auto-Ban Player by Adding to GitHub Ban List
-            local bannedList = game:HttpGet(banListUrl, true)
-            if not string.find(bannedList, tostring(playerId)) then
-                local newBanList = bannedList .. "\n" .. playerId .. " -- " .. playerName
-                local requestUrl = "https://api.github.com/repos/" .. githubRepo .. "/contents/banned_users.txt"
+                if not success then
+                    warn("❌ Webhook failed: " .. tostring(response))
+                end
 
-                local requestBody = httpService:JSONEncode({
-                    message = "Auto-ban: " .. playerName,
-                    content = httpService:Base64Encode(newBanList),
-                    sha = game:HttpGet(requestUrl, true):match('"sha":%s-"([^"]+)"')
-                })
-
-                httpService:RequestAsync({
-                    Url = requestUrl,
-                    Method = "PUT",
-                    Headers = {
-                        ["Authorization"] = "token " .. githubToken,
-                        ["Content-Type"] = "application/json"
-                    },
-                    Body = requestBody
-                })
+                error("Tampering detected! You are now permanently banned.")
             end
-
-            error("Tampering detected! You are now permanently banned.")
+            task.wait(1)
         end
-        wait(0.1)
-    end
+    end)
 end
 
--- 🚀 Activate Anti-Crack System
-if settings.whitelist.AntiCrack.DetectTampering then
-    task.spawn(detectTampering)
-end
 
 local function verifyHWID()
     local success, encryptedHWIDList = pcall(function()
