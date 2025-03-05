@@ -6,15 +6,15 @@ getfenv().settings = {
         Security = "Max",
 
         HWIDSource = {
-            URL = "https://raw.githubusercontent.com/Username/Repo/main/hwids.txt",
+            URL = "https://raw.githubusercontent.com/Yoogp/whitelist/refs/heads/main/hwids.txt",
             UseLoadstring = true,
             Encrypted = true,
-            EncryptionKey = "YourSecretKey",
+            EncryptionKey = "rizzy",
         },
 
         SaveWhitelistedUsers = {
-            GitHubRepo = "Username/RepoName",
-            GitHubToken = "ghp_xxx",
+            GitHubRepo = "Yoogp/whitelist",
+            GitHubToken = "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",
             UseGitHub = true, 
         },
 
@@ -27,14 +27,14 @@ getfenv().settings = {
 
         AntiCrack = {
             Enabled = true,
-            WebhookURL = "https://discord.com/api/webhooks/...",
+            WebhookURL = "https://discord.com/api/webhooks/1346928956472950907/xayHI4m9eE689h0s_L08S4sdsGW6YFbSCtvO4VxM9a0aw9fuoRoMkvtdRrTBhon36PV5",
             DetectDebuggers = true,
             DetectTampering = true,
         },
 
         RemoteBans = {
             Enabled = true,
-            BanListURL = "https://raw.githubusercontent.com/Username/Repo/main/banned_users.txt",
+            BanListURL = "https://raw.githubusercontent.com/Yoogp/whitelist/refs/heads/main/bans.txt",
         },
     }
 }
