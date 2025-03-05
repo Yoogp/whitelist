@@ -1,7 +1,6 @@
 {
-    "HWIDs": [
+    "whitelisted_hwids": [
         "46334904-1a70-48df-9115-84862ad079bd",
-        "hwid2",
-        "hwid3"
+        "ANOTHER_HWID_HERE"
     ]
 }
